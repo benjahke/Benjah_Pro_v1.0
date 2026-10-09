@@ -27,10 +27,14 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4
-        
+
       - name: Create local.properties
-      	run: echo "sdk.dir=$ANDROID_HOME" > local.properties
-        
+        run: echo "sdk.dir=$ANDROID_HOME" > local.properties
+
+      - name: Remove invalid Java home setting
+        run: |
+          find . -name gradle.properties -type f -exec sed -i '/^[[:space:]]*org\.gradle\.java\.home[[:space:]]*=/d' {} \;
+
       - name: Show Java version
         run: java -version
 
