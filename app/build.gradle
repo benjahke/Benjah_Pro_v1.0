@@ -16,9 +16,10 @@ android {
         versionName "11.1.0"
         manifestPlaceholders = [
 			weatherAPIkey: "",
-			crashReportEndpoint: ""
+			crashReportEndpoint: "",
+			crashApiKey: "",
+			backupPassword: ""
 			]
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
