@@ -1,0 +1,107 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '2.4.10'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    alias(libs.plugins.compose.compiler)
+}
+
+android {
+    compileSdk 37
+
+    defaultConfig {
+        applicationId "com.coderGtm.yantra"
+        minSdk 24
+        targetSdk 36
+        versionCode 125
+        versionName "11.1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    androidResources {
+        generateLocaleConfig true
+    }
+
+    flavorDimensions  "version"
+    productFlavors {
+        free {
+            dimension "version"
+        }
+        pro {
+            dimension "version"
+            applicationIdSuffix ".pro"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources = true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders.appLabel = "@string/app_name"
+        }
+        beta {
+            manifestPlaceholders
+            minifyEnabled true
+            shrinkResources = true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            applicationIdSuffix ".beta"
+            versionNameSuffix "-beta"
+            signingConfig signingConfigs.debug
+            manifestPlaceholders.appLabel = "@string/app_name_beta"
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+            manifestPlaceholders.appLabel = "@string/app_name_debug"
+        }
+    }
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+        compose true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    namespace 'com.coderGtm.yantra'
+}
+
+dependencies {
+
+    implementation libs.core.ktx
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.constraintlayout
+    implementation libs.app.update
+    implementation libs.app.update.ktx
+    implementation libs.feature.delivery
+    implementation libs.feature.delivery.ktx
+    implementation libs.volley
+    implementation libs.colorpickerview
+    implementation libs.preference.ktx
+    implementation libs.acra.http
+    implementation libs.acra.dialog
+    implementation libs.activity.ktx
+    implementation libs.activity.compose
+    implementation libs.markdown.renderer.m3
+    proImplementation libs.webkit
+    implementation libs.android.image.cropper
+    implementation libs.luaj.jse
+    implementation libs.security.crypto
+    implementation libs.bundles.ktor
+    implementation libs.localbroadcastmanager
+    implementation platform(libs.compose.bom)
+    implementation libs.material3
+    implementation libs.ui.tooling
+
+    testImplementation libs.junit
+    testImplementation libs.org.json
+    testImplementation libs.bundles.mockito
+    testImplementation libs.kotlinx.coroutines.test
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+}
